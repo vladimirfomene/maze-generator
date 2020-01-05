@@ -18,6 +18,7 @@ class Cell {
 		if(this.walls.left) line(x, y + cellSize, x, y);
 
 		if(this.visited){
+			noStroke();
 			fill(255, 0, 255, 100);
 			rect(x, y, cellSize, cellSize);
 		}
@@ -26,17 +27,29 @@ class Cell {
 	checkNeighbors(){
 		var neighbors = [];
 
-		var top = grid[index(i, j - 1)];
-		var right = grid[index(i + 1, j)];
-		var bottom = grid[index(i, j + 1)];
-		var left = grid[index(i - 1, j)];
+		var top = grid[index(this.i, this.j - 1)];
+		var right = grid[index(this.i + 1, this.j)];
+		var bottom = grid[index(this.i, this.j + 1)];
+		var left = grid[index(this.i - 1, this.j)];
 
 		if(top && !top.visited) neighbors.push(top);
 		if(right && !right.visited) neighbors.push(right);
 		if(bottom && !bottom.visited) neighbors.push(bottom);
 		if(left && !left.visited) neighbors.push(left);
 	
-		return neighbors;
+		if(neighbors.length > 0){
+				var idx = Math.floor(Math.random() * neighbors.length);
+				return neighbors[idx];
+		} else {
+				return undefined;
+		}
 	}
 
+	highlight(){
+		var x = this.i * cellSize;
+		var y = this.j * cellSize;
+		noStroke();
+		fill(0, 0, 255, 100);
+		rect(x, y, cellSize, cellSize);
+	}
 }
